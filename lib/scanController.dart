@@ -56,13 +56,18 @@ class ScanController extends GetxController {
   }
 
   initTFlite() async {
-    await Tflite.loadModel(
+    String? result = await Tflite.loadModel(
       model: 'assets/model.tflite',
       labels: 'assets/labels.txt',
       isAsset: true,
       numThreads: 1,
       useGpuDelegate: false,
     );
+    if (result == null) {
+      print('Failed to load the model');
+    } else {
+      print('Model loaded: $result');
+    }
   }
 
   objectDetector(CameraImage image) async {
